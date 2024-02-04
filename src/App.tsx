@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ReadPage from './pages/ReadPage'
+import EssayPage from './pages/EssayPage'
+import WritePage from './pages/WritePage'
+import RememberPage from './pages/RememberPage'
+import SettingsPage from './pages/SettingsPage'
+import NotFoundPage from './pages/NotFoundPage'
+import MainLayout from './components/MainLayout'
+import styles from './App.module.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          {/* Default route to ReadPage, which includes the EssayListComponent */}
+          <Route index element={<ReadPage />} />
+          {/* Dynamic route for individual essays */}
+          <Route path="essay/:id" element={<EssayPage />} />
+          {/* Additional routes for other sections of the app */}
+          <Route path="write" element={<WritePage />} />
+          <Route path="remember" element={<RememberPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          {/* You can add more routes as needed */}
+        </Route>
+        {/* Handle 404 Not Found */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 
