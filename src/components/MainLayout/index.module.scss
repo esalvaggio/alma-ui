@@ -1,0 +1,20 @@
+.mainLayout {
+    display: flex; // Enables flex layout for sidebar and main content
+    min-height: 100vh; // Full viewport height
+    background-color: #26151B; // Main background color
+
+    // Add any other styles for your main layout
+}
+
+.contentArea {
+    margin: 10px;
+    border: 3px solid #693B38;
+    width: 100%;
+}
+
+// Include media queries for responsive design
+@media (max-width: 768px) {
+    .mainLayout {
+        flex-direction: column; // Stack sidebar and content on smaller screens
+    }
+}

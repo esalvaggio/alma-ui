@@ -10,23 +10,25 @@ import styles from './App.module.scss';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          {/* Default route to ReadPage, which includes the EssayListComponent */}
-          <Route index element={<ReadPage />} />
-          {/* Dynamic route for individual essays */}
-          <Route path="essay/:id" element={<EssayPage />} />
-          {/* Additional routes for other sections of the app */}
-          <Route path="write" element={<WritePage />} />
-          <Route path="remember" element={<RememberPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          {/* You can add more routes as needed */}
-        </Route>
-        {/* Handle 404 Not Found */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Router>
+    <div className = {styles.appContainer}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            {/* Default route to ReadPage, which includes the EssayListComponent */}
+            <Route path="read" element={<ReadPage />} />
+            {/* Dynamic route for individual essays */}
+            <Route path="read/essay/:id" element={<EssayPage />} />
+            {/* Additional routes for other sections of the app */}
+            <Route path="write" element={<WritePage />} />
+            <Route path="remember" element={<RememberPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            {/* You can add more routes as needed */}
+          </Route>
+          {/* Handle 404 Not Found */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
