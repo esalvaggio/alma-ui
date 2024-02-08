@@ -1,8 +1,8 @@
 .sidebar {
-    background-color: #26151B; // Dark background color for the sidebar
+    background-color: #2C191F; // Dark background color for the sidebar
     width: 289px;
     margin: 10px;
-    border: 3px solid #693B38;
+    border: 2px solid #3E2325;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -13,14 +13,12 @@
 
     .logo {
         // Styles for the logo at the top
-        margin-bottom: 20px;
+        border-bottom: 2px  solid #3E2325;
         font-size: 38px;
         font-weight: 500;
-        margin-left: 30px;
+        padding-bottom: 20px;
+        padding-left: 30px;
         margin-top: 20px;
-    }
-    .line{
-        border-bottom: 3px solid #693B38;
     }
 
     .navLinks {
