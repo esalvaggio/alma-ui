@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../AuthContext'; // This is where you store your auth state
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { setAuthData }: any = useContext(AuthContext); // Using context to set authentication data globally
+    const navigate = useNavigate();
 
     const handleLogin = async (event: any) => {
         event.preventDefault();
@@ -18,10 +18,8 @@ const LoginPage = () => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data,"logged in!")
-            // Assuming the response contains a token
-            setAuthData(data.token); // Persist this token securely
-            // Redirect to a different page or do something else upon successful login
+            localStorage.setItem('authToken', data.token)
+            navigate('/')
         } else {
             // Handle errors, e.g., show an error message
         }

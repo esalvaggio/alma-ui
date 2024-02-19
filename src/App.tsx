@@ -8,12 +8,24 @@ import NotFoundPage from './pages/NotFoundPage'
 import MainLayout from './components/MainLayout'
 import styles from './App.module.scss';
 import LoginPage from './pages/LoginPage';
-import { AuthProvider } from './AuthContext';
+import { AuthProvider, useAuthContext } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 
-function App() {
+function AppWrapper() {
   return (
     <AuthProvider>
+      <App />
+    </AuthProvider>
+  )
+}
+
+function App() {
+  const { loading } = useAuthContext();
+
+  if (loading) {
+    return <>Loading...</>
+  }
+  return (
       <div className={styles.appContainer}>
         <Router>
           <Routes>
@@ -58,8 +70,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-    </AuthProvider>
   );
 }
 
-export default App;
+export default AppWrapper;
