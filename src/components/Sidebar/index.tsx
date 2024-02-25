@@ -8,13 +8,13 @@ const Sidebar = () => {
                 <div className={styles.logo}>Alma</div>
                 <ul className={styles.navLinks}>
                     <li>
-                        <NavLink to='/read' className={({ isActive }) => (isActive ? styles.active : '')}>Read</NavLink>
+                        <NavLink to='/' className={({ isActive }) => (isActive ? styles.active : '')}>Inbox</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/write' className={({ isActive }) => (isActive ? styles.active : '')}>Write</NavLink>
+                        <NavLink to='/write' className={({ isActive }) => (isActive ? styles.active : '')}>Journal</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/remember' className={({ isActive }) => (isActive ? styles.active : '')}>Remember</NavLink>
+                        <NavLink to='/review' className={({ isActive }) => (isActive ? styles.active : '')}>Review</NavLink>
                     </li>
                 </ul>
             </div>

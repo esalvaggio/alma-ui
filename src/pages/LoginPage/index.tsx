@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../AuthContext';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { setIsAuthenticated } = useAuthContext();
 
     const handleLogin = async (event: any) => {
         event.preventDefault();
@@ -19,6 +21,7 @@ const LoginPage = () => {
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('authToken', data.token)
+            setIsAuthenticated(true)
             navigate('/')
         } else {
             // Handle errors, e.g., show an error message

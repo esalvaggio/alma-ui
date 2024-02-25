@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ReadPage from './pages/ReadPage'
 import EssayPage from './pages/EssayPage'
 import WritePage from './pages/WritePage'
-import RememberPage from './pages/RememberPage'
+import ReviewPage from './pages/ReviewPage'
 import SettingsPage from './pages/SettingsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import MainLayout from './components/MainLayout'
@@ -10,6 +9,7 @@ import styles from './App.module.scss';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider, useAuthContext } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
+import InboxPage from './pages/InboxPage';
 
 function AppWrapper() {
   return (
@@ -35,13 +35,13 @@ function App() {
               </ProtectedRoute>
             }>
               {/* Default route to ReadPage, which includes the EssayListComponent */}
-              <Route path="read" element={
+              <Route path="/" element={
                 <ProtectedRoute>
-                  <ReadPage />
+                  <InboxPage />
                 </ProtectedRoute>
               } />
               {/* Dynamic route for individual essays */}
-              <Route path="read/essay/:id" element={
+              <Route path="essay/:id" element={
                 <ProtectedRoute>
                   <EssayPage />
                 </ProtectedRoute>
@@ -52,9 +52,9 @@ function App() {
                   <WritePage />
                 </ProtectedRoute>
               } />
-              <Route path="remember" element={
+              <Route path="review" element={
                 <ProtectedRoute>
-                  <RememberPage />
+                  <ReviewPage />
                 </ProtectedRoute>
               } />
               <Route path="settings" element={
