@@ -1,75 +1,51 @@
-.essayPage {
+.headerContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.closeIcon {
+    height: 32px;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: unset;
+    appearance: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 20px;
+    margin: 0;
+    background-color: #3E2325;
+    width: 30px;
+}
+
+.essayContainer {
+    display: flex;
+    overflow-y: auto;
+
+    .essayContent {
+        font-size: 19px;
+        line-height: 30.4px;
+    }
+}
+
+.essayPageContainer {
+    display: flex;
+    flex: 1 1 1px;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.footer {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: 2px solid #3E2325;
+    height: 64px;
     background-color: #2C191F;
-    height: 100%;
-
-    .pageContainer {
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex: 1 1 1px;
-        flex-direction: column;
-        padding: 0 24px;
-        min-height: 100%;
-        min-width: 0px;
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-
-    .header {
-        position: relative;
-        box-sizing: border-box;
-        border-bottom: 2px solid #3E2325;
-        background-color: #2C191F;
-        height: 64px;
-        padding-top: 16px;
-        padding-bottom: 16px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-    }
-
-    .closeIcon {
-        height: 32px;
-        box-sizing: border-box;
-        outline: none;
-        border: none;
-        background: transparent;
-        padding: 0;
-        color: unset;
-        appearance: none;
-        cursor: pointer;
-        white-space: nowrap;
-        font-size: 20px;
-        margin: 0;
-        background-color: #3E2325;
-        width: 30px;
-    }
-
-    .essayContainer {
-        display: flex;
-        overflow-y: auto;
-        .essayContent {
-            font-size: 19px;
-            line-height: 30.4px;
-        }
-    }
-
-    .essayPageContainer {
-        display: flex;
-        flex: 1 1 1px;
-        flex-direction: column;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .footer {
-        display: flex;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-top: 2px solid #3E2325;
-        height: 64px;
-        background-color: #2C191F;
-    }
 }

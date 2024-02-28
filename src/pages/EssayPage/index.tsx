@@ -4,6 +4,8 @@ import { fetchData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import PageLayout from '../../components/PageLayout';
 
 const EssayPage = () => {
     const navigate = useNavigate();
@@ -43,25 +45,25 @@ const EssayPage = () => {
     }, [id])
 
     return (
-        <div className={style.essayPage}>
-            <div className={style.pageContainer}>
-                <div className={style.essayPageContainer}>
-                    <div className={style.header}>
+        <PageLayout>
+            <div className={style.essayPageContainer}>
+                <Header>
+                    <div className={style.headerContainer}>
                         <button onClick={() => navigate('/')} className={style.closeIcon}>X</button>
                     </div>
-                    <div className={style.essayContainer}>
-                        <div className={style.essayContent}>
-                            {essay.content}
-                            <p></p>
-                            {essayCards.map((card) => {
-                                return <div key={card.id}>{card.question}</div>
-                            })}
-                        </div>
+                </Header>
+                <div className={style.essayContainer}>
+                    <div className={style.essayContent}>
+                        {essay.content}
+                        <p />
+                        {essayCards.map((card) => {
+                            return <div key={card.id}>{card.question}</div>
+                        })}
                     </div>
-                    <div className={style.footer}></div>
                 </div>
+                <div className={style.footer}></div>
             </div>
-        </div>
+        </PageLayout>
     )
 };
 

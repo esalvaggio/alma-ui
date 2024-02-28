@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import styles from './index.module.scss'
 import { fetchData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
+import PageLayout from '../../components/PageLayout';
+import style from './index.module.scss'
 const InboxPage = () => {
     const [essaysMinimal, setEssaysMinimal] = useState([{ id: "", title: "", author: "" }])
     const [loading, setLoading] = useState(true)
@@ -23,22 +25,23 @@ const InboxPage = () => {
         getEssaysMinimal()
     }, [])
 
-    if (loading) return <p>Loading...</p>;
+    // if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
-            <h1>Inbox</h1>
-            <ul>
+        <PageLayout>
+            <Header title="Inbox" />
+            <div className={style.essayListContainer}>
                 {essaysMinimal.map((essay) => (
-                    <li key={essay.id}>
-                        <Link to={`/essay/${essay.id}`}>
-                            {essay.title}
-                        </Link>
-                    </li>
+                    <Link to={`/essay/${essay.id}`} className={style.essayLink}>
+                        <div className={style.essayItem}>
+                        <h2>{essay.title}</h2>
+                        <p>{essay.author}</p>
+                        </div>
+                    </Link>
                 ))}
-            </ul>
-        </div>
+            </div>
+        </PageLayout>
     );
 };
 
