@@ -10,7 +10,7 @@ import PageLayout from '../../components/PageLayout';
 const EssayPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [essay, setEssay] = useState({ id: id, user: "", title: "", content: "" })
+    const [essay, setEssay] = useState({ id: id, user: "", title: "", content: "", author: "" })
     const [essayCards, setEssayCards] = useState(
         [{
             id: "",
@@ -53,12 +53,17 @@ const EssayPage = () => {
                     </div>
                 </Header>
                 <div className={style.essayContainer}>
-                    <div className={style.essayContent}>
-                        {essay.content}
-                        <p />
-                        {essayCards.map((card) => {
-                            return <div key={card.id}>{card.question}</div>
-                        })}
+                    <div className={style.essayContainerContent}>
+                        <h1 className={style.essayTitle}>{essay.title}</h1>
+                        <div className={style.essayAuthor}>{essay.author}</div>
+                        <div className={style.essayContent}>
+                            {essay.content}
+                        </div>
+                        <div>
+                            {essayCards.map((card) => {
+                                return <div key={card.id}>{card.question}</div>
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div className={style.footer}></div>

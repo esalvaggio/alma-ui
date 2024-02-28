@@ -25,9 +25,40 @@
     display: flex;
     overflow-y: auto;
 
+    .essayContainerContent {
+        max-width: 740px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        line-height: 1.8;
+    }
+
+    .essayTitle {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .essayAuthor {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
     .essayContent {
-        font-size: 19px;
-        line-height: 30.4px;
+        font-size: 21px;
+    }
+
+    .essayContent p {
+        margin-bottom: 1em;
+    }
+
+    .essayContent a {
+        color: #1a0dab;
+        text-decoration: none;
+    }
+
+    .essayContent a:hover {
+        text-decoration: underline;
     }
 }
 
