@@ -6,21 +6,15 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import PageLayout from '../../components/PageLayout';
+import CardStack from '../../components/CardStack';
+import { CardData, EssayData } from '../../interfaces';
 
 const EssayPage = () => {
     const navigate = useNavigate();
-    const { id } = useParams();
-    const [essay, setEssay] = useState({ id: id, user: "", title: "", content: "", author: "" })
-    const [essayCards, setEssayCards] = useState(
-        [{
-            id: "",
-            essay: "",
-            question: "",
-            answer: "",
-            next_review_date: "",
-            review_interval: "",
-            review_count: "",
-        }])
+    const { id } = useParams<{ id?: string }>();
+    const [essay, setEssay] = useState<EssayData | null>(null)
+    const [essayCardsData, setEssayCardsData] = useState<CardData[]>([])
+    //@todo add loading/error state 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
@@ -28,12 +22,30 @@ const EssayPage = () => {
         const fetchEssayAndCards = async () => {
             try {
                 setLoading(true)
+                if (!id || isNaN(parseInt(id, 10))) {
+                    navigate('/error');
+                    return;
+                }
+                const numericId = parseInt(id, 10);
                 const [essayData, cardData] = await Promise.all([
-                    fetchData(`${API_URLS.ESSAY}${id}/`),
-                    fetchData(`${API_URLS.CARDS}?essay_id=${id}`)
+                    fetchData(`${API_URLS.ESSAY}${numericId}/`),
+                    fetchData(`${API_URLS.CARDS}?essay_id=${numericId}`)
                 ]);
-                setEssay(essayData);
-                setEssayCards(cardData);
+                setEssay({
+                    id: numericId,
+                    user: essayData.user,
+                    title: essayData.title,
+                    content: essayData.content,
+                    author: essayData.author
+                });
+                setEssayCardsData(cardData.map((card: CardData) => ({
+                    ...card,
+                    next_review_date: new Date(card.next_review_date),
+                    id: Number(card.id),
+                    essay: Number(card.essay),
+                    review_interval: Number(card.review_interval),
+                    review_count: Number(card.review_count)
+                })));
             } catch (error) {
                 console.error("Fetching card and essay data failed:", error)
                 setError(true)
@@ -42,7 +54,7 @@ const EssayPage = () => {
             }
         }
         fetchEssayAndCards();
-    }, [id])
+    }, [id, navigate])
 
     return (
         <PageLayout>
@@ -54,16 +66,19 @@ const EssayPage = () => {
                 </Header>
                 <div className={style.essayContainer}>
                     <div className={style.essayContainerContent}>
-                        <h1 className={style.essayTitle}>{essay.title}</h1>
-                        <div className={style.essayAuthor}>{essay.author}</div>
-                        <div className={style.essayContent}>
-                            {essay.content}
-                        </div>
-                        <div>
-                            {essayCards.map((card) => {
-                                return <div key={card.id}>{card.question}</div>
-                            })}
-                        </div>
+                        {essay ? (
+                            <>
+                                <h1 className={style.essayTitle}>{essay.title}</h1>
+                                <div className={style.essayAuthor}>{essay.author}</div>
+                                <div className={style.essayContent}>
+                                    {essay.content}
+                                </div>
+                                <div>
+                                    <CardStack initialCardsData={essayCardsData}></CardStack>
+                                </div>
+                            </>) :
+                            // Handle error state
+                            <div></div>}
                     </div>
                 </div>
                 <div className={style.footer}></div>
