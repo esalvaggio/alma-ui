@@ -1,0 +1,17 @@
+.card {
+    background-color: #26151B;
+
+    color: #F1ECE8;
+    border: 2px solid #693B38;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 10px;
+    // position: absolute;
+    width: calc(100% - 100px);
+
+    h1 {
+        font-size: 18px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 400;
+    }
+}
