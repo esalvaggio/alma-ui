@@ -7,9 +7,11 @@ import NotFoundPage from './pages/NotFoundPage'
 import MainLayout from './components/MainLayout'
 import styles from './App.module.scss';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import { AuthProvider, useAuthContext } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import InboxPage from './pages/InboxPage';
+import SubmitEssayPage from './pages/SubmitEssayPage';
 
 function AppWrapper() {
   return (
@@ -62,9 +64,14 @@ function App() {
                   <SettingsPage />
                 </ProtectedRoute>
               } />
-              {/* You can add more routes as needed */}
+              <Route path="submitessay" element={
+                <ProtectedRoute>
+                  <SubmitEssayPage />
+                </ProtectedRoute>
+              } />
             </Route>
             <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
             {/* Handle 404 Not Found */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

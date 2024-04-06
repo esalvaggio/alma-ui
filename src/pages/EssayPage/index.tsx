@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import PageLayout from '../../components/PageLayout';
 import CardStack from '../../components/CardStack';
 import { CardData, EssayData } from '../../interfaces';
+import showdown from 'showdown';
 
 const EssayPage = () => {
     const navigate = useNavigate();
@@ -31,11 +32,13 @@ const EssayPage = () => {
                     fetchData(`${API_URLS.ESSAY}${numericId}/`),
                     fetchData(`${API_URLS.CARDS}?essay_id=${numericId}`)
                 ]);
+                const converter = new showdown.Converter();
+                const htmlOutput = converter.makeHtml(essayData.content);
                 setEssay({
                     id: numericId,
                     user: essayData.user,
                     title: essayData.title,
-                    content: essayData.content,
+                    content: htmlOutput,
                     author: essayData.author
                 });
                 setEssayCardsData(cardData.map((card: CardData) => ({
@@ -71,7 +74,7 @@ const EssayPage = () => {
                                 <h1 className={style.essayTitle}>{essay.title}</h1>
                                 <div className={style.essayAuthor}>{essay.author}</div>
                                 <div className={style.essayContent}>
-                                    {essay.content}
+                                    <div dangerouslySetInnerHTML={{ __html: essay.content }}></div>
                                 </div>
                                 <div>
                                     <CardStack initialCardsData={essayCardsData}></CardStack>

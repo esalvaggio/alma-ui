@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
+import { postData } from '../../utils/apiUtils';
+import { API_URLS } from '../../utils/apiRoutes';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -10,23 +12,27 @@ const LoginPage = () => {
 
     const handleLogin = async (event: any) => {
         event.preventDefault();
-        const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+      
+        const onSuccess = (data: any) => {
+          localStorage.setItem('authToken', data.token);
+          setIsAuthenticated(true);
+          navigate('/');
+        };
+      
+        try {
+          await postData(
+            API_URLS.LOGIN,
+            {
+              username,
+              password,
             },
-            body: JSON.stringify({ username, password }),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            localStorage.setItem('authToken', data.token)
-            setIsAuthenticated(true)
-            navigate('/')
-        } else {
-            // Handle errors, e.g., show an error message
+            {},
+            onSuccess
+          );
+        } catch (error) {
+          // Handle errors, e.g., show an error message
         }
-    };
+      };
 
     return (
         <div>
