@@ -4,6 +4,6 @@ export const API_URLS = {
     ESSAYS_MINIMAL: `${baseUrl}essays/minimal/`,
     ESSAY: `${baseUrl}essays/`,
     CARDS: `${baseUrl}cards/`,
-    REGISTER: `${baseUrl}user/register`,
-    LOGIN: `${baseUrl}user/login`,
+    REGISTER: `${baseUrl}user/register/`,
+    LOGIN: `${baseUrl}user/login/`,
 }
