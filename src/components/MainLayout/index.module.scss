@@ -18,3 +18,9 @@
         flex-direction: column; // Stack sidebar and content on smaller screens
     }
 }
+.verticalLine {
+    width: 1px;
+    height: 100px;
+    background-color: #ccc;
+    margin: 0 10px;
+  }

@@ -1,4 +1,4 @@
-export const baseUrl = "http://127.0.0.1:8000/api/"
+export const baseUrl = "https://alma-backend-e8edf244cc30.herokuapp.com/api/"
 
 export const API_URLS = {
     ESSAYS_MINIMAL: `${baseUrl}essays/minimal/`,

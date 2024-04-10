@@ -6,6 +6,7 @@ const MainLayout = () => {
     return (
         <div className={styles.mainLayout}>
           <Sidebar />
+          {/* <div className={styles.verticalLine} /> */}
           <div className={styles.contentArea}>
             <Outlet />
           </div>
