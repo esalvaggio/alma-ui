@@ -45,14 +45,14 @@ const LoginPage = () => {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Your username"
+                    placeholder="username"
                     required
                 />
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Your password"
+                    placeholder="password"
                     required
                 />
                 <button className={style.submitButton} type="submit">Login</button>
