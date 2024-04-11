@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { postData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
+import style from './index.module.scss'
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -35,23 +36,26 @@ const LoginPage = () => {
       };
 
     return (
-        <div>
-            <form onSubmit={handleLogin}>
+        <div className={style.loginContainer}>
+          <div className={style.logoText}>
+            Alma
+          </div>
+            <form className={style.submitContainer} onSubmit={handleLogin}>
                 <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
+                    placeholder="Your username"
                     required
                 />
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
+                    placeholder="Your password"
                     required
                 />
-                <button type="submit">Login</button>
+                <button className={style.submitButton} type="submit">Login</button>
             </form>
         </div>
     );
