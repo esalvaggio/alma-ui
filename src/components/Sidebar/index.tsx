@@ -1,12 +1,15 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './index.module.scss'
+import { ReactComponent as Logo } from '../../assets/logo.svg'
 
 const Sidebar = () => {
     const location = useLocation();
     return (
         <aside className={styles.sidebar}>
             <div className={styles.navBarLogo}>
-                <div className={styles.logo}>Alma</div>
+                <div className={styles.logo}>
+                    <Logo width = "63" height = "63"/>
+                </div>
                 <ul className={styles.navLinks}>
                     <li>
                         <NavLink to='/' className={({ isActive }) => ((isActive || location.pathname.startsWith('/essay')) ? styles.active : '')}>Inbox</NavLink>

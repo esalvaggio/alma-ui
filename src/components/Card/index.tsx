@@ -8,9 +8,10 @@ interface CardComponent {
 const Card = ({ onAnswer, data }: CardComponent) => {
     return (
         <div className={style.card}>
-            <h1>{data.question}</h1>
-            {/* <button onClick={() => onAnswer(index, 'remembered')}>Remembered</button>
-            <button onClick={() => onAnswer(index, 'didntRemember')}>Didn't Remember</button> */}
+            <div className={style.cardContent}>
+                <h1 className={style.questionText}>{data.question}</h1>
+                <div className={style.continueText}>click anywhere to continue</div>
+            </div>
         </div>
     )
 }
