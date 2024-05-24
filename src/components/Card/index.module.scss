@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
 
-    .cardContent{
+    .cardContent {
         margin: 36px;
         height: 100%;
         display: flex;
@@ -25,12 +25,61 @@
             margin: 0;
             line-height: 1.3em;
             border-bottom: 1px solid #F1ECE8;
-            padding-bottom: 30px;
+            padding-bottom: 20px;
         }
-        .continueText{
+
+        .contentWrapper {
             display: flex;
-            justify-content: center;
-            font-size: 17px;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+
+            .answerContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex-grow: 1;
+
+                .answer {
+                    padding-top: 20px;
+                    font-size: 18px;
+                    line-height: 1.3em;
+                }
+
+                .buttonContent {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .answerButton {
+                        background-color: #D18F81;
+                        color: #26151B;
+                        border: 2px solid #F1ECE8;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border-radius: 2px;
+                        cursor: pointer;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        width: 158px;
+                        height: 33px;
+                    }
+                }
+            }
+
+            .answerContent {
+                display: flex;
+                justify-content: center;
+                margin-bottom: auto;
+            }
+
+            .continueText {
+                display: flex;
+                justify-content: center;
+                font-size: 17px;
+                margin-top: auto;
+            }
         }
     }
+}
+.cardUnanswered{
+    cursor: pointer;
 }
