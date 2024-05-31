@@ -29,7 +29,8 @@
         max-width: 740px;
         margin: 0 auto;
         padding: 20px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-family: "Source Serif 4", serif;
+        font-optical-sizing: auto;
         line-height: 1.8;
     }
 
@@ -45,7 +46,7 @@
     }
 
     .essayContent {
-        font-size: 21px;
+        font-size: 18px;
     }
 
     .essayContent p {
@@ -53,7 +54,7 @@
     }
 
     .essayContent a {
-        color: #1a0dab;
+        color: #d8ae20;
         text-decoration: none;
     }
 
