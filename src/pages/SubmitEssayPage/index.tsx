@@ -14,40 +14,37 @@ import { API_URLS } from '../../utils/apiRoutes';
 */
 const SubmitEssayPage = () => {
     const [htmlInput, setHtmlInput] = useState('')
-    const [renderedHtml, setRenderedHtml] = useState('');
 
 
     const processHtml = () => {
-        const sanitizedHtml = DOMPurify.sanitize(htmlInput);
+        const extractTitle = (htmlString: String) => {
+            const match = htmlString.match(/<title>(.*?)<\/title>/i); // Case insensitive match
+            return match ? match[1] : 'No title found';
+        };
+        const title = extractTitle(htmlInput);
+        const sanitizedHtml = DOMPurify.sanitize(htmlInput, {
+            ADD_TAGS: ['title']
+        });
         const doc = new DOMParser().parseFromString(sanitizedHtml, 'text/html');
         const article = new Readability(doc).parse();
 
         var turndownService = new TurndownService();
-        const markdown = article ? turndownService.turndown(article.content) : '';
+        const markdown = article ? turndownService.turndown(article.content) : 'Error converting content to Markdown';
 
-        const converter = new showdown.Converter();
-        const htmlOutput = converter.makeHtml(markdown);
-        setRenderedHtml(htmlOutput);
-
-        const data = {
-            content: markdown,
-        };
-
-        postData(API_URLS.ESSAY, data, {});
+        postData(API_URLS.ESSAY, { title: title, content: markdown }, {});
     }
 
     return (
         <PageLayout>
             <Header title="Submit Essay Test" />
             <div>
-                submit essay here
+                Submit Essay here as HTML
             </div>
             <textarea
                 value={htmlInput}
                 onChange={(e) => setHtmlInput(e.target.value)}
             />
             <button onClick={processHtml}>Process</button>
-            <div dangerouslySetInnerHTML={{ __html: renderedHtml }}></div>
         </PageLayout>
     );
 };

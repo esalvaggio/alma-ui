@@ -31,7 +31,7 @@ const Card = ({ onAnswer, data }: CardComponent) => {
             <div className={`${style.card} ${style.cardFooter}`}>
                 <div className={style.footerContent}>
                     <div className={style.footerInfo}>
-                        <div className={style.footerTitle}>It's fair to describe Schitzofrenia as probably mostly genetic</div>
+                        <div className={style.footerTitle}>Essay Title Goes Here</div>
                         <div className={style.footerDate}>Reading Today, May 24, 2024</div>
                     </div>
                     <div className={style.footerTimeline}>In-Text – 5 Days - 2 Weeks – 1 Month – 2 Months – *</div>
