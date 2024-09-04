@@ -32,4 +32,14 @@
     margin-top: 10px;
     margin-bottom: 0;
   }
-  
+  .inboxPageContainer {
+    display: flex;
+    flex: 1 1 1px;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    .inboxContainer {
+        display: flex;
+        overflow-y: auto;
+    }
+}

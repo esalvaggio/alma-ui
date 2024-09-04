@@ -30,16 +30,20 @@ const InboxPage = () => {
 
     return (
         <PageLayout>
-            <Header title="Inbox" />
-            <div className={style.essayListContainer}>
-                {essaysMinimal.map((essay) => (
-                    <Link to={`/essay/${essay.id}`} className={style.essayLink}>
-                        <div className={style.essayItem}>
-                        <h2>{essay.title}</h2>
-                        <p>{essay.author}</p>
-                        </div>
-                    </Link>
-                ))}
+            <div className={style.inboxPageContainer}>
+                <Header title="Inbox" />
+                <div className={style.inboxContainer}>
+                    <div className={style.essayListContainer}>
+                        {essaysMinimal.map((essay) => (
+                            <Link to={`/essay/${essay.id}`} className={style.essayLink}>
+                                <div className={style.essayItem}>
+                                    <h2>{essay.title}</h2>
+                                    <p>{essay.author}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </div>
         </PageLayout>
     );

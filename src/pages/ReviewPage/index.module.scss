@@ -1,0 +1,11 @@
+.reviewPageContainer {
+    display: flex;
+    flex: 1 1 1px;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    .reviewContainer {
+        display: flex;
+        overflow-y: auto;
+    }
+}

@@ -1,6 +1,6 @@
 import style from './index.module.scss'
 const PageLayout = ({ children }: any) => {
-    return (<div className={style.essayPage}>
+    return (<div className={style.pageLayoutGroup}>
         <div className={style.pageContainer}>
             {children}
         </div>
