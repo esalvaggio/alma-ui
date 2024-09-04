@@ -27,7 +27,7 @@ const ReviewPage = () => {
             }
         }
         fetchCards();
-    })
+    },[])
 
     return (
         <PageLayout>
