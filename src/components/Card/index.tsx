@@ -1,27 +1,47 @@
 import { useState } from 'react'
 import { CardData } from '../../interfaces'
 import style from './index.module.scss'
+import { postData } from '../../utils/apiUtils'
+import { API_URLS } from '../../utils/apiRoutes'
 
 interface CardComponent {
-    onAnswer: (index: any, answer: any) => void
-    data: CardData
+    cardData: CardData
 }
-const Card = ({ onAnswer, data }: CardComponent) => {
+const Card = ({ cardData }: CardComponent) => {
     const [answered, setAnswered] = useState(false)
+
+    const handleCardAnswer = (correct: boolean) => {
+        answerCard(correct)
+    }
+    const answerCard = async (answer: boolean) => {
+        try {
+            const numericId = cardData.id
+            await postData(
+                `${API_URLS.CARDS_ANSWER}${numericId}/`,
+                {
+                    correct: answer
+                },
+                {}
+            );
+        } catch (error) {
+            // Handle errors, e.g., show an error message
+            console.log(error)
+        }
+    }
     return (
         <div className={style.cardGroup}>
             <div className={`${style.card} ${style.mainCard} ${!answered && style.cardUnanswered}`} onClick={() => setAnswered(true)}>
                 <div className={style.cardContent}>
-                    <h1 className={style.questionText}>{data.question}</h1>
+                    <h1 className={style.questionText}>{cardData.question}</h1>
                     <div className={style.contentWrapper}>
                         {!answered ? (
                             <div className={style.continueText}>click anywhere to continue</div>
                         ) : (
                             <div className={style.answerContainer}>
-                                <div className={style.answer}>{data.answer}</div>
+                                <div className={style.answer}>{cardData.answer}</div>
                                 <div className={style.buttonContent}>
-                                    <button className={style.answerButton} onClick={() => console.log("remembered")}>Remembered</button>
-                                    <button className={style.answerButton} onClick={() => console.log("didnt remembered")}>Didn't Remember</button>
+                                    <button className={style.answerButton} onClick={() => handleCardAnswer(true)}>Remembered</button>
+                                    <button className={style.answerButton} onClick={() => handleCardAnswer(false)}>Didn't Remember</button>
                                 </div>
                             </div>
                         )}

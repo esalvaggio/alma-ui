@@ -3,7 +3,6 @@ import Header from '../../components/Header';
 import PageLayout from '../../components/PageLayout';
 import { Readability } from '@mozilla/readability';
 import DOMPurify from 'dompurify';
-import showdown from 'showdown';
 import TurndownService from 'turndown'
 import { postData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
