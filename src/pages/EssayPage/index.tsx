@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import PageLayout from '../../components/PageLayout';
-import CardStack from '../../components/CardStack';
 import { CardData, EssayData } from '../../interfaces';
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -15,6 +14,8 @@ import remarkRehype from 'remark-rehype';
 import rehypeReact from 'rehype-react';
 import type { Options, Components } from 'rehype-react';
 import * as ReactJSXRuntime from 'react/jsx-runtime';
+import { Root as MdastRoot } from 'mdast';
+import { Root as HastRoot } from 'hast';
 
 import React from 'react';
 import Card from '../../components/Card';
@@ -28,26 +29,94 @@ const EssayPage = () => {
     const { id } = useParams<{ id?: string }>();
     const [essay, setEssay] = useState<EssayData | null>(null)
     const [essayCardsData, setEssayCardsData] = useState<CardData[]>([])
-    //@todo add loading/error state 
+    const [content, setContent] = useState(<></>);
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    useEffect(() => {
+
+    const processMarkdown = async (markdownContent: string, cards: CardData[]) => {
         const flashcardsPlugin = (cards: any) => {
             return (tree: any) => {
                 let paragraphCount = 0
                 visit(tree, 'paragraph', (node, index, parent) => {
                     paragraphCount += 1
-                    if (paragraphCount % 3  == 0 && index) {
+                    if (paragraphCount % 3 == 0 && index && cards.length > 0) {
+                        const card = cards.shift();
                         parent.children.splice(index + 1, 0, {
-                            type: 'flashcard',
-                            data: { hProperties: { cardData: cards.shift() } }
-                          });
+                            type: 'element',
+                            tagName: 'div',
+                            children: [
+                                {
+                                    type: 'element',
+                                    tagName: 'p',
+                                    children: [{
+                                        type: 'text',
+                                        value: `Flashcard: ${JSON.stringify(card)}`
+                                    }]
+                                }
+                            ]
+                        });
                     }
-                    console.log("visited", node, index, parent)
                 })
             }
         }
+        const options: Options & { components: Partial<ExtendedComponents> } = {
+            Fragment: React.Fragment,
+            jsx: (ReactJSXRuntime as any).jsx,
+            jsxs: (ReactJSXRuntime as any).jsxs,
+            components: {
+                div: (props: any) => {
+                    const childText = props.children.props.children;
+                    if (typeof childText === 'string' && childText.startsWith('Flashcard: ')) {
+                        try {
+                            const cardData = JSON.parse(childText.slice(10)); // Remove 'Flashcard: ' prefix
+                            return <Card cardData={cardData} />;
+                        } catch (error) {
+                            console.error('Error parsing flashcard data:', error);
+                        }
+                    }
+                    return <div {...props} />;
+                }
+
+            }
+        }
+        const mdastTree = unified()
+            .use(remarkParse)
+            .parse(markdownContent) as MdastRoot;
+
+        // Apply flashcards plugin
+        const mdastWithCards = unified()
+            .use(flashcardsPlugin, [...cards])
+            .runSync(mdastTree) as MdastRoot;
+
+        console.log("Markdown AST with flashcards:", JSON.stringify(mdastWithCards, null, 2));
+
+        // Convert mdast to hast
+        const hastTree = unified()
+            .use(remarkRehype, { allowDangerousHtml: true })
+            .runSync(mdastWithCards) as HastRoot;
+
+        console.log("HTML AST:", JSON.stringify(hastTree, null, 2));
+
+        // Convert hast to React elements
+        const result = unified()
+            .use(rehypeReact, options)
+            .stringify(hastTree);
+
+        return result;
+
+        // more concise method currently commented to break it down into testable pieces
+        // const process = await unified()
+        //     .use(remarkParse) // Parse markdown to markdown ast (mast)
+        //     .use(flashcardsPlugin, [...cards]) // Custom plugin to inject flashcards into ast
+        //     .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
+        //     .use(rehypeReact, options) //Convert hast to react
+        //     .process(markdownContent)
+        // console.log("Processed result:", process.result);
+        // return process.result;
+    }
+
+    useEffect(() => {
         const fetchEssayAndCards = async () => {
             try {
                 setLoading(true)
@@ -60,29 +129,24 @@ const EssayPage = () => {
                     fetchData(`${API_URLS.ESSAY}${numericId}/`),
                     fetchData(`${API_URLS.CARDS}?essay_id=${numericId}`)
                 ]);
-                // const converter = new showdown.Converter();
-                // const htmlOutput = converter.makeHtml(essayData.content);
-                const flashcards = [
-                    {question: "Flashcard 1 content"},
-                    {question: "Flashcard 2 content"},
-                    {question: "Flashcard 3 content"},
-                  ];
-                const options: Options & { components: Partial<ExtendedComponents> } = {
-                    Fragment: React.Fragment,
-                    jsx: (ReactJSXRuntime as any).jsx,
-                    jsxs: (ReactJSXRuntime as any).jsxs,
-                    components: {
-                        flashcard: Card,
-                    }
-                }
-                const process = unified()
-                    .use(remarkParse) // Parse markdown to markdown ast (mast)
-                    .use(flashcardsPlugin, flashcards) // Custom plugin to inject flashcards into ast
-                    .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
-                    .use(rehypeReact, options) //Convert hast to react
-                    .process(essayData.content)
 
-                    
+                const cards: CardData[] = cardData.map((card: CardData) => ({
+                    ...card,
+                    next_review_date: new Date(card.next_review_date),
+                    id: Number(card.id),
+                    essay: Number(card.essay),
+                    review_interval: Number(card.review_interval),
+                    review_count: Number(card.review_count)
+                }))
+
+                processMarkdown(essayData.content, cards)
+                    .then((reactElement) => {
+                        setContent(reactElement)
+                    })
+                    .catch(error => {
+                        console.error("Error in processMarkdown:", error);
+                    });
+
                 setEssay({
                     id: numericId,
                     user: essayData.user,
@@ -90,14 +154,7 @@ const EssayPage = () => {
                     content: essayData.content,
                     author: essayData.author
                 });
-                setEssayCardsData(cardData.map((card: CardData) => ({
-                    ...card,
-                    next_review_date: new Date(card.next_review_date),
-                    id: Number(card.id),
-                    essay: Number(card.essay),
-                    review_interval: Number(card.review_interval),
-                    review_count: Number(card.review_count)
-                })));
+                setEssayCardsData(cards);
             } catch (error) {
                 console.error("Fetching card and essay data failed:", error)
                 setError(true)
@@ -123,11 +180,7 @@ const EssayPage = () => {
                                 <h1 className={style.essayTitle}>{essay.title}</h1>
                                 <div className={style.essayAuthor}>{essay.author}</div>
                                 <div className={style.essayContent}>
-                                    {essay.content}
-                                    {/* <div dangerouslySetInnerHTML={{ __html: essay.content }}></div> */}
-                                </div>
-                                <div>
-                                    <CardStack initialCardsData={essayCardsData}></CardStack>
+                                    {content}
                                 </div>
                             </>) :
                             // Handle error state
