@@ -44,17 +44,13 @@ const EssayPage = () => {
                         const card = cards.shift();
                         parent.children.splice(index + 1, 0, {
                             type: 'element',
-                            tagName: 'div',
-                            children: [
-                                {
-                                    type: 'element',
-                                    tagName: 'p',
-                                    children: [{
-                                        type: 'text',
-                                        value: `Flashcard: ${JSON.stringify(card)}`
-                                    }]
+                            data: {
+                                hName: "Flashcard", 
+                                hProperties: {
+                                    cardData: card
                                 }
-                            ]
+                            },
+                            children: []
                         });
                     }
                 })
@@ -65,55 +61,20 @@ const EssayPage = () => {
             jsx: (ReactJSXRuntime as any).jsx,
             jsxs: (ReactJSXRuntime as any).jsxs,
             components: {
-                div: (props: any) => {
-                    const childText = props.children.props.children;
-                    if (typeof childText === 'string' && childText.startsWith('Flashcard: ')) {
-                        try {
-                            const cardData = JSON.parse(childText.slice(10)); // Remove 'Flashcard: ' prefix
-                            return <Card cardData={cardData} />;
-                        } catch (error) {
-                            console.error('Error parsing flashcard data:', error);
-                        }
-                    }
-                    return <div {...props} />;
-                }
-
+                //@ts-ignore
+                Flashcard: (props: any) => {
+                    const { cardData } = props;
+                    return  <Card cardData={cardData} />;
+                },
             }
         }
-        const mdastTree = unified()
-            .use(remarkParse)
-            .parse(markdownContent) as MdastRoot;
-
-        // Apply flashcards plugin
-        const mdastWithCards = unified()
-            .use(flashcardsPlugin, [...cards])
-            .runSync(mdastTree) as MdastRoot;
-
-        console.log("Markdown AST with flashcards:", JSON.stringify(mdastWithCards, null, 2));
-
-        // Convert mdast to hast
-        const hastTree = unified()
-            .use(remarkRehype, { allowDangerousHtml: true })
-            .runSync(mdastWithCards) as HastRoot;
-
-        console.log("HTML AST:", JSON.stringify(hastTree, null, 2));
-
-        // Convert hast to React elements
-        const result = unified()
-            .use(rehypeReact, options)
-            .stringify(hastTree);
-
-        return result;
-
-        // more concise method currently commented to break it down into testable pieces
-        // const process = await unified()
-        //     .use(remarkParse) // Parse markdown to markdown ast (mast)
-        //     .use(flashcardsPlugin, [...cards]) // Custom plugin to inject flashcards into ast
-        //     .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
-        //     .use(rehypeReact, options) //Convert hast to react
-        //     .process(markdownContent)
-        // console.log("Processed result:", process.result);
-        // return process.result;
+        const process = await unified()
+            .use(remarkParse) // Parse markdown to markdown ast (mast)
+            .use(flashcardsPlugin, [...cards]) // Custom plugin to inject flashcards into ast
+            .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
+            .use(rehypeReact, options) //Convert hast to react
+            .process(markdownContent)
+        return process.result;
     }
 
     useEffect(() => {
