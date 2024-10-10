@@ -14,8 +14,6 @@ import remarkRehype from 'remark-rehype';
 import rehypeReact from 'rehype-react';
 import type { Options, Components } from 'rehype-react';
 import * as ReactJSXRuntime from 'react/jsx-runtime';
-import { Root as MdastRoot } from 'mdast';
-import { Root as HastRoot } from 'hast';
 
 import React from 'react';
 import Card from '../../components/Card';
@@ -28,32 +26,55 @@ const EssayPage = () => {
     const navigate = useNavigate();
     const { id } = useParams<{ id?: string }>();
     const [essay, setEssay] = useState<EssayData | null>(null)
-    const [essayCardsData, setEssayCardsData] = useState<CardData[]>([])
     const [content, setContent] = useState(<></>);
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
 
+    // converts markdown to a markdown abstract syntax tree, to quickly insert flashcards into the content
+    // abstract syntax tree is traversed to find point of insertion, then insert card data, then we convert
+    // the abstract syntax tree into react components. 
     const processMarkdown = async (markdownContent: string, cards: CardData[]) => {
         const flashcardsPlugin = (cards: any) => {
             return (tree: any) => {
-                let paragraphCount = 0
+                var totalTextLength = 0
+                var currentTextLength = 0
+
+                // calculates the total length of the content
+                visit(tree, 'text', (node, index, parent) => {
+                    totalTextLength += node.value.length
+                })
+                
+                // sorts the cards by percent_through
+                const sortedCards = cards.sort((a: CardData, b: CardData) => a.percent_through - b.percent_through);
+
+                // inserts cards after paragraph x percent of the way through
+                // may need to slightly change this as sometimes openai api says card should appear closer than it should. 
                 visit(tree, 'paragraph', (node, index, parent) => {
-                    paragraphCount += 1
-                    if (paragraphCount % 3 == 0 && index && cards.length > 0) {
-                        const card = cards.shift();
-                        parent.children.splice(index + 1, 0, {
-                            type: 'element',
-                            data: {
-                                hName: "Flashcard", 
-                                hProperties: {
-                                    cardData: card
-                                }
-                            },
-                            children: []
-                        });
+                    currentTextLength += node.children.reduce((acc: number, child: any) => acc + (child.value ? child.value.length : 0), 0)
+                    while (sortedCards.length > 0) {
+                        const card = sortedCards[0]
+                        const targetPosition = (card.percent_through / 100) * totalTextLength;
+                        if (currentTextLength >= targetPosition) {
+                            //@ts-ignore
+                            parent.children.splice(index + 1, 0, {
+                                type: 'element',
+                                data: {
+                                    hName: 'Flashcard',
+                                    hProperties: {
+                                        cardData: card
+                                    }
+                                },
+                                children: []
+                            });
+                            sortedCards.shift();
+                        } else {
+                            break;
+                        }
+
                     }
                 })
+
             }
         }
         const options: Options & { components: Partial<ExtendedComponents> } = {
@@ -115,7 +136,6 @@ const EssayPage = () => {
                     content: essayData.content,
                     author: essayData.author
                 });
-                setEssayCardsData(cards);
             } catch (error) {
                 console.error("Fetching card and essay data failed:", error)
                 setError(true)
