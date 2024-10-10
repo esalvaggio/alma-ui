@@ -14,4 +14,5 @@ export interface CardData {
     next_review_date: Date;
     review_interval: number;
     review_count: number;
+    percent_through: number;
 }
