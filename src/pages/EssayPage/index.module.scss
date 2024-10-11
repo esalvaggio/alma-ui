@@ -24,6 +24,13 @@
 .essayContainer {
     display: flex;
     overflow-y: auto;
+    img {
+        display: block;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
 
     .essayContainerContent {
         max-width: 740px;

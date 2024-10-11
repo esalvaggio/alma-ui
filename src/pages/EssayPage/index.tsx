@@ -14,6 +14,8 @@ import remarkRehype from 'remark-rehype';
 import rehypeReact from 'rehype-react';
 import type { Options, Components } from 'rehype-react';
 import * as ReactJSXRuntime from 'react/jsx-runtime';
+import { Root as MdastRoot } from 'mdast';
+import { Root as HastRoot } from 'hast';
 
 import React from 'react';
 import Card from '../../components/Card';
@@ -89,13 +91,37 @@ const EssayPage = () => {
                 },
             }
         }
+        const mdastTree = unified()
+            .use(remarkParse)
+            .parse(markdownContent) as MdastRoot;
+
+        // Apply flashcards plugin
+        const mdastWithCards = unified()
+            .use(flashcardsPlugin, [...cards])
+            .runSync(mdastTree) as MdastRoot;
+
+        console.log("Markdown AST with flashcards:", JSON.stringify(mdastWithCards, null, 2));
+
+        // Convert mdast to hast
+        const hastTree = unified()
+            .use(remarkRehype, { allowDangerousHtml: true })
+            .runSync(mdastWithCards) as HastRoot;
+
+        console.log("HTML AST:", JSON.stringify(hastTree, null, 2));
+
+        // Convert hast to React elements
+        const result = unified()
+            .use(rehypeReact, options)
+            .stringify(hastTree);
+
+        return result;
         const process = await unified()
-            .use(remarkParse) // Parse markdown to markdown ast (mast)
-            .use(flashcardsPlugin, [...cards]) // Custom plugin to inject flashcards into ast
-            .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
-            .use(rehypeReact, options) //Convert hast to react
-            .process(markdownContent)
-        return process.result;
+        //     .use(remarkParse) // Parse markdown to markdown ast (mast)
+        //     .use(flashcardsPlugin, [...cards]) // Custom plugin to inject flashcards into ast
+        //     .use(remarkRehype, { allowDangerousHtml: true }) // Convert mast to html ast (hast)
+        //     .use(rehypeReact, options) //Convert hast to react
+        //     .process(markdownContent)
+        // return process.result;
     }
 
     useEffect(() => {
