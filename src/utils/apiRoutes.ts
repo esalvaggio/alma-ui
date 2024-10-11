@@ -5,6 +5,7 @@ export const API_URLS = {
     ESSAY: `${baseUrl}/essays/`,
     CARDS: `${baseUrl}/cards/`,
     CARDS_REVIEW: `${baseUrl}/cards/review`,
+    CARDS_ANSWER: `${baseUrl}/cards/answer/`,
     REGISTER: `${baseUrl}/user/register/`,
     LOGIN: `${baseUrl}/user/login/`,
 }
