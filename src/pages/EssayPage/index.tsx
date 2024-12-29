@@ -85,7 +85,7 @@ const EssayPage = () => {
                 //@ts-ignore
                 Flashcard: (props: any) => {
                     const { cardData } = props;
-                    return  <Card cardData={cardData} />;
+                    return  <Card cardData={cardData} mode='inline' />;
                 },
             }
         }

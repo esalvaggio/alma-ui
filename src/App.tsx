@@ -12,6 +12,7 @@ import { AuthProvider, useAuthContext } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import InboxPage from './pages/InboxPage';
 import SubmitEssayPage from './pages/SubmitEssayPage';
+import LandingPage from './pages/LandingPage';
 
 function AppWrapper() {
   return (
@@ -22,61 +23,34 @@ function AppWrapper() {
 }
 
 function App() {
-  const { loading } = useAuthContext();
+  const { isLoading } = useAuthContext();
 
-  if (loading) {
+  if (isLoading) {
     return <>Loading...</>
   }
   return (
-      <div className={styles.appContainer}>
-        <Router>
-          <Routes>
-            <Route path="/" element={
-              <ProtectedRoute>
-                <MainLayout />
-              </ProtectedRoute>
-            }>
-              {/* Default route to ReadPage, which includes the EssayListComponent */}
-              <Route path="/" element={
-                <ProtectedRoute>
-                  <InboxPage />
-                </ProtectedRoute>
-              } />
-              {/* Dynamic route for individual essays */}
-              <Route path="essay/:id" element={
-                <ProtectedRoute>
-                  <EssayPage />
-                </ProtectedRoute>
-              } />
-              {/* Additional routes for other sections of the app */}
-              <Route path="write" element={
-                <ProtectedRoute>
-                  <WritePage />
-                </ProtectedRoute>
-              } />
-              <Route path="review" element={
-                <ProtectedRoute>
-                  <ReviewPage />
-                </ProtectedRoute>
-              } />
-              <Route path="settings" element={
-                <ProtectedRoute>
-                  <SettingsPage />
-                </ProtectedRoute>
-              } />
-              <Route path="submitessay" element={
-                <ProtectedRoute>
-                  <SubmitEssayPage />
-                </ProtectedRoute>
-              } />
-            </Route>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            {/* Handle 404 Not Found */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Router>
-      </div>
+    <div className={styles.appContainer}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="/home" element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<InboxPage />} />
+            <Route path="essay/:id" element={<EssayPage />} />
+            <Route path="write" element={<WritePage />} />
+            <Route path="review" element={<ReviewPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="submitessay" element={<SubmitEssayPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

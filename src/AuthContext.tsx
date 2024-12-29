@@ -3,34 +3,34 @@ import { createContext, useState, useEffect, useContext } from 'react';
 export interface AuthContext {
   isAuthenticated: boolean,
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>,
-  loading: boolean,
+  isLoading: boolean,
 }
 
 export const AuthContext = createContext<AuthContext>({
   isAuthenticated: false,
   setIsAuthenticated: () => { },
-  loading: true
+  isLoading: true
 });
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem('authToken')
     setIsAuthenticated(!!token)
-    setLoading(false);
+    setIsLoading(false);
   }, []);
 
-  return { isAuthenticated, setIsAuthenticated, loading }
+  return { isAuthenticated, setIsAuthenticated, isLoading }
 }
 
 export const AuthProvider = ({ children }: any) => {
-  const { isAuthenticated, setIsAuthenticated, loading } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, isLoading } = useAuth();
 
   const contextValue = {
     isAuthenticated,
     setIsAuthenticated,
-    loading
+    isLoading
   };
 
   return (

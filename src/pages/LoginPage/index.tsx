@@ -17,7 +17,7 @@ const LoginPage = () => {
         const onSuccess = (data: any) => {
           localStorage.setItem('authToken', data.token);
           setIsAuthenticated(true);
-          navigate('/');
+          navigate('/home');
         };
       
         try {

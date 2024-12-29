@@ -7,7 +7,7 @@ import PageLayout from '../../components/PageLayout';
 import style from './index.module.scss'
 const InboxPage = () => {
     const [essaysMinimal, setEssaysMinimal] = useState([{ id: "", title: "", author: "" }])
-    const [loading, setLoading] = useState(true)
+    // const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
     useEffect(() => {
@@ -15,18 +15,18 @@ const InboxPage = () => {
             try {
                 const data = await fetchData(API_URLS.ESSAYS_MINIMAL)
                 setEssaysMinimal(data);
-                setLoading(false)
+                // setLoading(false)
                 setError(false)
             } catch {
                 setError(true)
-                setLoading(false)
+                // setLoading(false)
             }
         }
         getEssaysMinimal()
     }, [])
 
     // if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    // if (error) return <p>Error: {error}</p>;
 
     return (
         <PageLayout>
@@ -35,7 +35,7 @@ const InboxPage = () => {
                 <div className={style.inboxContainer}>
                     <div className={style.essayListContainer}>
                         {essaysMinimal.map((essay) => (
-                            <Link to={`/essay/${essay.id}`} className={style.essayLink}>
+                            <Link to={`/home/essay/${essay.id}`} className={style.essayLink}>
                                 <div className={style.essayItem}>
                                     <h2>{essay.title}</h2>
                                     <p>{essay.author}</p>
