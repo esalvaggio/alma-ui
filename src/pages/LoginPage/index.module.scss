@@ -1,4 +1,4 @@
-.loginContainer{
+.loginContainer {
     display: flex;
     flex-direction: column;
     max-width: 285px;
@@ -6,44 +6,53 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-    .loginContent{
+
+    .loginContent {
         height: 100px;
         width: 100px;
     }
-    .logoText{
+
+    .logoText {
         font-size: 51px;
     }
+
     input {
         margin-top: 30px;
         border: 1px solid #693B38;
         border-radius: 0px;
-        background-color: #26151B;
-        font-size: 16px;
+        background-color: #2B141B;
+        font-size: 1rem;
         color: white;
         width: 285px;
         height: 42px;
         padding: 0 5px;
-        font-family: "Polestar Unica77 TT", sans-serif;   
-      }
-      ::placeholder {
+        font-family: "Polestar Unica77 TT", sans-serif;
+    }
+
+    ::placeholder {
         padding-left: 5px;
-        font-size: 16px;
+        font-size: 1rem;
         color: #693B38;
-      }
-    .submitButton{
+    }
+
+    .submitButton {
         margin-top: 30px;
         width: 100%;
         height: 42px;
         border: 1px solid white;
-        font-size: 16px;
+        font-size: 1.125rem;
         font-weight: 600;
-        font-family: "Polestar Unica77 TT", sans-serif;   
+        font-family: "Polestar Unica77 TT", sans-serif;
         background-color: #D18F81;
         cursor: pointer;
+        margin-bottom: 16px;
+    }
+    .errorComponent{
+        height: 10px;
     }
 }
 
-.submitContainer{
+.submitContainer {
     display: flex;
     flex-direction: column;
 }
