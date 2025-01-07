@@ -1,5 +1,5 @@
 import style from './index.module.scss';
-import { ReactComponent as Logo } from '../../assets/logoBlack.svg'
+import LogoUrl from '../../assets/logoBlack.svg'
 import demoImage from '../../assets/demo.png';
 
 const LandingPage = () => {
@@ -8,12 +8,7 @@ const LandingPage = () => {
             <div className={style.contentWrapper}>
                 <header className={style.header}>
                     <div className={style.logo}>
-                        <Logo
-                            width="27"
-                            height="27"
-                            aria-label="Alma logo"
-                            role="img"
-                        />
+                        <img src={LogoUrl} width="27" height="27" alt="Alma Logo" />
                         <span>Alma</span>
                     </div>
                     <nav>

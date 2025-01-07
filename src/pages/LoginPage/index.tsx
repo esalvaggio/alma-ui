@@ -4,7 +4,7 @@ import { useAuthContext } from '../../AuthContext';
 import { postData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
 import style from './index.module.scss'
-import { ReactComponent as Logo } from '../../assets/logo.svg'
+import LogoUrl from '../../assets/logo.svg'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -45,12 +45,7 @@ const LoginPage = () => {
 
   return (
     <div className={style.loginContainer}>
-      <Logo
-          width="60"
-          height="60"
-          aria-label="Alma logo"
-          role="img"
-        />
+      <img src={LogoUrl} width="60" height="60" alt="Alma Logo" />
       <div className={style.logoText}>
         Alma
       </div>
