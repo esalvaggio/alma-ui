@@ -1,6 +1,6 @@
 // Todo later potentially
 const WritePage = () => {
-    return (<>write</>)
+  return <>write</>;
 };
 
 export default WritePage;

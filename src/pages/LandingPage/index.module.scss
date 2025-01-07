@@ -1,86 +1,85 @@
 .landingContainer {
-    min-height: 100vh;
-    background-color: #F1ECE8;
-    color: black;
-    padding: 0 24px;
+  min-height: 100vh;
+  background-color: #f1ece8;
+  color: black;
+  padding: 0 24px;
 }
 
 .contentWrapper {
-    margin: 0 auto;
-    width: 100%;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .header {
-    padding: 24px 0;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  .logo {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
-    .logo {
-        align-items: center;
-        display: flex;
-        gap: 10px;
+    gap: 10px;
 
-        span {
-            color: black;
-            font-size: 1.375rem;
-        }
+    span {
+      color: black;
+      font-size: 1.375rem;
     }
-    .loginText{
-        color: #626262;
-        font-size: 1.125rem;
-        text-decoration: none;
-    }
-    .loginText:hover{
-        text-decoration: underline;
-    }
+  }
+  .loginText {
+    color: #626262;
+    font-size: 1.125rem;
+    text-decoration: none;
+  }
+  .loginText:hover {
+    text-decoration: underline;
+  }
 }
-    
-    
-.mainContent {
-    display: flex;
-    flex-direction: column;
-    padding: 40px 0;
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
 
-    .title {
-        line-height: 1.2;
-        font-weight: 400;
-        margin: 0;
-    }
-    .demoImage {
-        display: block;
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-    h1 {
-        font-size: 2rem;
-    }
-    p {
-        font-size: 1.625rem;
-    }
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .title {
+    line-height: 1.2;
+    font-weight: 400;
+    margin: 0;
+  }
+  .demoImage {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.625rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .landingContainer {
-        padding: 0;
+  .landingContainer {
+    padding: 0;
+  }
+  .header {
+    padding: 16px;
+  }
+  .mainContent {
+    flex-direction: column;
+
+    .title {
+      padding: 0 16px;
+      max-width: 100%;
     }
-    .header {
-        padding: 16px;
+    h1 {
+      font-size: 1.5rem;
     }
-    .mainContent {
-        flex-direction: column;
-        
-        .title {
-            padding: 0 16px;
-            max-width: 100%;
-        }
-        h1 {
-            font-size: 1.5rem;
-        }
-        p {
-            font-size: 1.125rem;
-        }
+    p {
+      font-size: 1.125rem;
     }
+  }
 }

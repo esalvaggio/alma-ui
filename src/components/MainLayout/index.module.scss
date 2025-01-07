@@ -1,20 +1,18 @@
 .mainLayout {
-    display: flex;
-    min-height: 100vh;
-    background-color: #26151B;
-
+  display: flex;
+  min-height: 100vh;
+  background-color: #26151b;
 }
 
 .contentArea {
-    margin: 10px;
-    border: 2px solid #3E2325;
-    width: 100%;
+  margin: 10px;
+  border: 2px solid #3e2325;
+  width: 100%;
 }
 
-
 .verticalLine {
-    width: 1px;
-    height: 100px;
-    background-color: #ccc;
-    margin: 0 10px;
-  }
+  width: 1px;
+  height: 100px;
+  background-color: #ccc;
+  margin: 0 10px;
+}

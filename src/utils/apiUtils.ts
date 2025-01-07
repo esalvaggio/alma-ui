@@ -1,4 +1,10 @@
-const request = async (url: string, method: 'GET' | 'POST', data?: Record<string, any>, headers: Record<string, string> = {}, onSuccess?: (data: any) => void) => {
+const request = async (
+  url: string,
+  method: 'GET' | 'POST',
+  data?: Record<string, any>,
+  headers: Record<string, string> = {},
+  onSuccess?: (data: any) => void
+) => {
   try {
     const authToken = localStorage.getItem('authToken');
     const defaultHeaders = {
@@ -32,8 +38,15 @@ const request = async (url: string, method: 'GET' | 'POST', data?: Record<string
   }
 };
 
-export const fetchData = (url: string, headers?: Record<string, string>, onSuccess?: (data: any) => void) =>
-  request(url, 'GET', undefined, headers, onSuccess);
+export const fetchData = (
+  url: string,
+  headers?: Record<string, string>,
+  onSuccess?: (data: any) => void
+) => request(url, 'GET', undefined, headers, onSuccess);
 
-export const postData = (url: string, data?: Record<string, any>, headers?: Record<string, string>, onSuccess?: (data: any) => void) =>
-  request(url, 'POST', data, headers, onSuccess);
+export const postData = (
+  url: string,
+  data?: Record<string, any>,
+  headers?: Record<string, string>,
+  onSuccess?: (data: any) => void
+) => request(url, 'POST', data, headers, onSuccess);

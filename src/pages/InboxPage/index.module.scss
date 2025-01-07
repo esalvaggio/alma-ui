@@ -1,45 +1,45 @@
 .essayListContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-top: 30px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.essayLink {
+  text-decoration: none;
+  color: inherit;
+  padding-bottom: 30px;
+}
+
+.essayItem {
+  border: 2px solid #3e2325;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.essayItem:hover {
+  cursor: pointer;
+  background-color: #321f25;
+}
+
+h2 {
+  margin: 0;
+}
+
+p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.inboxPageContainer {
+  display: flex;
+  flex: 1 1 1px;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  .inboxContainer {
     display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding-top: 30px;
-    width: 80%;
-    max-width: 600px;
+    overflow-y: auto;
   }
-  
-  .essayLink {
-    text-decoration: none;
-    color: inherit; 
-    padding-bottom: 30px;
-  }
-  
-  .essayItem {
-    border: 2px solid #3E2325;
-    padding: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .essayItem:hover {
-    cursor: pointer;
-    background-color: #321f25;
-  }
-  
-  h2 {
-    margin: 0;
-  }
-  
-  p {
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
-  .inboxPageContainer {
-    display: flex;
-    flex: 1 1 1px;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    .inboxContainer {
-        display: flex;
-        overflow-y: auto;
-    }
 }

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { postData } from '../../utils/apiUtils';
 import { API_URLS } from '../../utils/apiRoutes';
-import style from './index.module.scss'
-import LogoUrl from '../../assets/logo.svg'
+import style from './index.module.scss';
+import LogoUrl from '../../assets/logo.svg';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -36,9 +36,9 @@ const LoginPage = () => {
       );
     } catch (error: any) {
       if (error.status === 400) {
-        setError("Invalid username or password");
+        setError('Invalid username or password');
       } else {
-        setError('An error occured. Please try again')
+        setError('An error occured. Please try again');
       }
     }
   };
@@ -46,9 +46,7 @@ const LoginPage = () => {
   return (
     <div className={style.loginContainer}>
       <img src={LogoUrl} width="60" height="60" alt="Alma Logo" />
-      <div className={style.logoText}>
-        Alma
-      </div>
+      <div className={style.logoText}>Alma</div>
       <form className={style.submitContainer} onSubmit={handleLogin}>
         <input
           type="text"
@@ -64,10 +62,14 @@ const LoginPage = () => {
           placeholder="password"
           required
         />
-        <button className={style.submitButton} type="submit">Login</button>
+        <button className={style.submitButton} type="submit">
+          Login
+        </button>
       </form>
       <div className={style.errorComponent}>
-        {error && <div className={style.error}>This account does not exist.</div>}
+        {error && (
+          <div className={style.error}>This account does not exist.</div>
+        )}
       </div>
     </div>
   );

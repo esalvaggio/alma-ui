@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import EssayPage from './pages/EssayPage'
-import WritePage from './pages/WritePage'
-import ReviewPage from './pages/ReviewPage'
-import SettingsPage from './pages/SettingsPage'
-import NotFoundPage from './pages/NotFoundPage'
-import MainLayout from './components/MainLayout'
+import EssayPage from './pages/EssayPage';
+import WritePage from './pages/WritePage';
+import ReviewPage from './pages/ReviewPage';
+import SettingsPage from './pages/SettingsPage';
+import NotFoundPage from './pages/NotFoundPage';
+import MainLayout from './components/MainLayout';
 import styles from './App.module.scss';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -19,14 +19,14 @@ function AppWrapper() {
     <AuthProvider>
       <App />
     </AuthProvider>
-  )
+  );
 }
 
 function App() {
   const { isLoading } = useAuthContext();
 
   if (isLoading) {
-    return <>Loading...</>
+    return <>Loading...</>;
   }
   return (
     <div className={styles.appContainer}>
@@ -35,11 +35,14 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route path="/home" element={
-            <ProtectedRoute>
-              <MainLayout />
-            </ProtectedRoute>
-          }>
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<InboxPage />} />
             <Route path="essay/:id" element={<EssayPage />} />
             <Route path="write" element={<WritePage />} />

@@ -3,15 +3,15 @@ import { useAuthContext } from '../../AuthContext';
 import { useEffect } from 'react';
 
 const NotFoundPage = () => {
-    const navigate = useNavigate();
-    const { isAuthenticated } = useAuthContext();
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login');
-        }
-    }, [isAuthenticated, navigate]);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthContext();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
-    return (<>Not Found</>);
+  return <>Not Found</>;
 };
 
 export default NotFoundPage;
