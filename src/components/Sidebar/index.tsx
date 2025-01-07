@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './index.module.scss'
-import { ReactComponent as Logo } from '../../assets/logo.svg'
+import LogoUrl from '../../assets/logo.svg'
 
 const Sidebar = () => {
     const location = useLocation();
@@ -8,7 +8,7 @@ const Sidebar = () => {
         <aside className={styles.sidebar}>
             <div className={styles.navBarLogo}>
                 <div className={styles.logo}>
-                    <Logo width = "63" height = "63"/>
+                    <img src={LogoUrl} width="63" height="63" alt="Logo" />
                 </div>
                 <ul className={styles.navLinks}>
                     <li>
